@@ -33,6 +33,7 @@ const VALUES: { [key in RuleType["field"] as string]: (string | number)[] } = {
   "Time Period": ["1 week", "1 month", "3 months"],
   "Sub-theme": ["theme a", "theme b"],
   "Customer ID": ["123", "345", "789"],
+  Source: ["twitter", "instagram", "googleads"],
 };
 
 export const Rule: FC<{
