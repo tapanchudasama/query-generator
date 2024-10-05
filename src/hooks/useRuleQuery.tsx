@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Rule, RuleGroup } from "../types/types";
 
 const CONDITION_TO_OPERATOR: {
@@ -26,9 +26,7 @@ export const useRuleQuery = (
 ) => {
   const [queryString, setQueryString] = useState("");
 
-  console.log(rules);
-
-  const computeQuery = () => {
+  const computeQuery = useCallback(() => {
     const query = rules.reduce((acc, curr, index) => {
       if (!curr.field || !curr.condition || !curr.value?.length) {
         return acc;
@@ -38,7 +36,7 @@ export const useRuleQuery = (
         CONDITION_TO_OPERATOR[curr.condition || ""]
       } "${curr.value?.join(",")}"`;
 
-      if (index != rules.length - 1) {
+      if (index !== rules.length - 1) {
         acc += ` ${CONJUNCTION_TO_OPERATOR[conjunction]} `;
       }
 
@@ -46,11 +44,11 @@ export const useRuleQuery = (
     }, "");
 
     setQueryString(query);
-  };
+  }, [rules, conjunction]);
 
   useEffect(() => {
     computeQuery();
-  }, [rules, conjunction]);
+  }, [rules, conjunction, computeQuery]);
 
   return {
     queryString,

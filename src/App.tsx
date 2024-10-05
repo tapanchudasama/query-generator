@@ -1,9 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { Button } from "./common/components/Button";
-import { RuleGroup as RuleGroupType, Rule as RuleType } from "./types/types";
-import { useRuleQuery } from "./hooks/useRuleQuery";
-import { ActiveQuery } from "./components/ActiveQuery";
+import { RuleGroup as RuleGroupType } from "./types/types";
 import { RuleGroup } from "./components/RuleGroup";
 
 function App() {
@@ -40,7 +38,7 @@ function App() {
     ]);
 
   const handleRuleGroupDelete = (deletedRuleGroupId: string) => {
-    const newGroups = ruleGroups.filter(({ id }) => id != deletedRuleGroupId);
+    const newGroups = ruleGroups.filter(({ id }) => id !== deletedRuleGroupId);
     setRuleGroups(newGroups);
   };
 

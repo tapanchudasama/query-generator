@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from "react";
 
-type Option = {
-  label?: string;
-  value?: string | number;
+export type Option = {
+  label: string;
+  value: string | number;
 };
 type SelectProps = {
   label?: string;
@@ -57,9 +57,6 @@ export const Select: FC<SelectProps> = ({
       {dropdownOptions.length > 0 && isOpen && (
         <div className="z-10 absolute w-full select-none space-y-2 py-2 shadow-md rounded-md bg-slate-800">
           {dropdownOptions.map(({ label, value }) => {
-            if (!label || !value) {
-              return;
-            }
             return (
               <div
                 key={value}

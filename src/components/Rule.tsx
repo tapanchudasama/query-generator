@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from "react";
-import { Select } from "../common/components/Select";
+import { FC, useEffect } from "react";
+import { Option, Select } from "../common/components/Select";
 import { Rule as RuleType } from "../types/types";
 import { DeleteIcon } from "../common/components/DeleteIcon";
 
@@ -42,17 +42,26 @@ export const Rule: FC<{
 }> = ({ rule, onRuleChange, handleRuleDelete }) => {
   useEffect(() => {
     onRuleChange(rule);
-  }, [rule]);
+  }, [rule, onRuleChange]);
+
+  const fields = FIELDS.filter((field) => !!field).map((field) => ({
+    label: field,
+    value: field,
+  })) as Option[];
+
+  const conditions = CONDITIONS.filter((condition) => !!condition).map(
+    (condition) => ({
+      label: condition,
+      value: condition,
+    })
+  ) as Option[];
 
   return (
     <div className="flex items-end space-x-4">
       <Select
         placeholder="Select field"
         label="Field"
-        dropdownOptions={FIELDS.map((field) => ({
-          label: field,
-          value: field,
-        }))}
+        dropdownOptions={fields}
         onChange={(value) => {
           onRuleChange({
             ...rule,
@@ -63,10 +72,7 @@ export const Rule: FC<{
       <Select
         placeholder="Select condition"
         label="Condition"
-        dropdownOptions={CONDITIONS.map((condition) => ({
-          label: condition,
-          value: condition,
-        }))}
+        dropdownOptions={conditions}
         onChange={(value) => {
           onRuleChange({
             ...rule,
