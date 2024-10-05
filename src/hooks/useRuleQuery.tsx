@@ -26,6 +26,8 @@ export const useRuleQuery = (
 ) => {
   const [queryString, setQueryString] = useState("");
 
+  console.log(rules);
+
   const computeQuery = () => {
     const query = rules.reduce((acc, curr, index) => {
       if (!curr.field || !curr.condition || !curr.value?.length) {
