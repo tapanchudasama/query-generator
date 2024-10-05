@@ -2,13 +2,13 @@ import { FC, useEffect, useState } from "react";
 
 type Option = {
   label?: string;
-  value?: string;
+  value?: string | number;
 };
 type SelectProps = {
   label?: string;
   placeholder: string;
   dropdownOptions: Option[];
-  onChange: (value: string) => void;
+  onChange: (value: string | number) => void;
 };
 
 export const Select: FC<SelectProps> = ({
@@ -18,14 +18,14 @@ export const Select: FC<SelectProps> = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string | number>();
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setIsOpen((isOpen) => !isOpen);
   };
 
-  const handleChange = (value: string) => {
+  const handleChange = (value: string | number) => {
     setIsOpen(false);
     setValue(value);
     onChange(value);

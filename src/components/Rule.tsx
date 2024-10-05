@@ -24,10 +24,10 @@ const FIELDS: Array<RuleType["field"]> = [
   "Customer ID",
 ];
 
-const VALUES: { [key in RuleType["field"] as string]: string[] } = {
+const VALUES: { [key in RuleType["field"] as string]: (string | number)[] } = {
   "": [],
   Language: ["English", "Hindi", "Gujarati", "Kanadda"],
-  Rating: ["5", "4", "3", "2", "1"],
+  Rating: [5, 4, 3, 2, 1],
   Theme: ["Product Feedback", "Platform", "Offers", "Performance"],
   Reason: ["Bad service", "Not delivered in good condition"],
   "Time Period": ["1 week", "1 month", "3 months"],
@@ -78,7 +78,7 @@ export const Rule: FC<{
         placeholder="Select criteria"
         label="Criteria"
         dropdownOptions={(VALUES[rule.field || ""] || []).map((value) => ({
-          label: value,
+          label: value.toString(),
           value: value,
         }))}
         onChange={(value) => {
