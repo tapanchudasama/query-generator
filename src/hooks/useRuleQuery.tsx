@@ -24,10 +24,10 @@ export const useRuleQuery = (
   rules: Rule[],
   conjunction: RuleGroup["conjunction"]
 ) => {
-  const [query, setQuery] = useState("");
+  const [queryString, setQueryString] = useState("");
 
   const computeQuery = () => {
-    let query = rules.reduce((acc, curr, index) => {
+    const query = rules.reduce((acc, curr, index) => {
       if (!curr.field || !curr.condition || !curr.value?.length) {
         return acc;
       }
@@ -43,16 +43,14 @@ export const useRuleQuery = (
       return acc;
     }, "");
 
-    setQuery(query);
+    setQueryString(query);
   };
 
   useEffect(() => {
     computeQuery();
   }, [rules, conjunction]);
 
-  console.log("@@@", query, rules);
-
   return {
-    query,
+    queryString,
   };
 };
