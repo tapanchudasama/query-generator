@@ -32,13 +32,10 @@ const VALUES: RuleType["value"] = [
 ];
 
 export const Rule: FC<{
+  rule: RuleType;
   onRuleChange: (rule: RuleType) => void;
-  handleRuleDelete: () => void;
-}> = ({ onRuleChange, handleRuleDelete }) => {
-  const [rule, setRule] = useState<RuleType>({
-    type: "rule",
-  });
-
+  handleRuleDelete: (id: string) => void;
+}> = ({ rule, onRuleChange, handleRuleDelete }) => {
   useEffect(() => {
     onRuleChange(rule);
   }, [rule]);
@@ -53,7 +50,7 @@ export const Rule: FC<{
           value: field,
         }))}
         onChange={(value) => {
-          setRule({
+          onRuleChange({
             ...rule,
             field: value as RuleType["field"],
           });
@@ -67,7 +64,7 @@ export const Rule: FC<{
           value: condition,
         }))}
         onChange={(value) => {
-          setRule({
+          onRuleChange({
             ...rule,
             condition: value as RuleType["condition"],
           });
@@ -81,13 +78,13 @@ export const Rule: FC<{
           value: value,
         }))}
         onChange={(value) => {
-          setRule({
+          onRuleChange({
             ...rule,
             value: [value] as RuleType["value"],
           });
         }}
       />
-      <DeleteIcon onClick={handleRuleDelete} />
+      <DeleteIcon onClick={() => handleRuleDelete(rule.id)} />
     </div>
   );
 };
