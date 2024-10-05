@@ -14,5 +14,5 @@ html, body {
 }
 
 #root {
-  @apply h-full bg-slate-900;
+  @apply h-full bg-slate-900 overflow-auto py-10;
 }

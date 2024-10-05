@@ -1,12 +1,20 @@
+import { useState } from "react";
 import "./App.css";
 import { Button } from "./common/components/Button";
-import { Select } from "./common/components/Select";
 import { Conjunction } from "./components/Conjunction";
 import { Rule } from "./components/Rule";
+import { Rule as RuleType } from "./types/types";
 
 function App() {
+  const [ruleCount, setRuleCount] = useState<number>(1);
+  const [ruleGroupCount, setRuleGroupCount] = useState<number>(1);
+
+  const handleRuleChange = (data: RuleType) => {
+    console.log("@@@@", data);
+  };
+
   return (
-    <main className="h-full container mx-auto p-16">
+    <main className="h-full container mx-auto">
       <div className="shadow-lg rounded-xl">
         <section className="bg-blue-600 p-8 rounded-t-xl space-y-2">
           <p className="text-2xl text-white font-semibold">Build your query</p>
@@ -19,12 +27,27 @@ function App() {
             <div>
               <Conjunction />
               <div className="space-y-4 pt-8 w-full">
-                <Rule />
+                {new Array(ruleCount).fill(1).map(() => (
+                  <Rule
+                    onRuleChange={handleRuleChange}
+                    handleRuleDelete={() =>
+                      setRuleCount((ruleCount) => ruleCount - 1)
+                    }
+                  />
+                ))}
               </div>
             </div>
-            <Button>+ Add filter</Button>
+            <Button onClick={() => setRuleCount((ruleCount) => ruleCount + 1)}>
+              + Add filter
+            </Button>
           </div>
-          <Button>+ Add new group filter</Button>
+          <Button
+            onClick={() =>
+              setRuleGroupCount((ruleGroupCount) => ruleGroupCount + 1)
+            }
+          >
+            + Add new group filter
+          </Button>
         </section>
       </div>
     </main>
