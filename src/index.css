@@ -12,3 +12,7 @@ html, body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+#root {
+  @apply h-full bg-slate-900;
+}
