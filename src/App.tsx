@@ -3,16 +3,17 @@ import "./App.css";
 import { Button } from "./common/components/Button";
 import { RuleGroup as RuleGroupType } from "./types/types";
 import { RuleGroup } from "./components/RuleGroup";
+import { getRandomId } from "./utils";
 
 function App() {
   const [ruleGroups, setRuleGroups] = useState<RuleGroupType[]>([
     {
       type: "rule_group",
-      id: Date.now().toString(),
+      id: getRandomId(),
       children: [
         {
           type: "rule",
-          id: Date.now().toString(),
+          id: getRandomId(),
         },
       ],
       not: false,
@@ -25,11 +26,11 @@ function App() {
       ...ruleGroups,
       {
         type: "rule_group",
-        id: Date.now().toString(),
+        id: getRandomId(),
         children: [
           {
             type: "rule",
-            id: Date.now().toString(),
+            id: getRandomId(),
           },
         ],
         not: false,

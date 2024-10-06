@@ -1,40 +1,10 @@
 import { FC, useEffect } from "react";
-import { Option, Select } from "../common/components/Select";
+import { Select } from "../common/components/Select";
 import { Rule as RuleType } from "../types/types";
 import { DeleteIcon } from "../common/components/DeleteIcon";
-
-const CONDITIONS: Array<RuleType["condition"]> = [
-  "Equals",
-  "Does not equal",
-  "Like",
-  "Not like",
-  "Is Empty",
-  "Is",
-  "Is not",
-];
-
-const FIELDS: Array<RuleType["field"]> = [
-  "Theme",
-  "Sub-theme",
-  "Reason",
-  "Language",
-  "Source",
-  "Rating",
-  "Time Period",
-  "Customer ID",
-];
-
-const VALUES: { [key in RuleType["field"] as string]: (string | number)[] } = {
-  "": [],
-  Language: ["English", "Hindi", "Gujarati", "Kanadda"],
-  Rating: [5, 4, 3, 2, 1],
-  Theme: ["Product Feedback", "Platform", "Offers", "Performance"],
-  Reason: ["Bad service", "Not delivered in good condition"],
-  "Time Period": ["1 week", "1 month", "3 months"],
-  "Sub-theme": ["theme a", "theme b"],
-  "Customer ID": ["123", "345", "789"],
-  Source: ["twitter", "instagram", "googleads"],
-};
+import { useFields } from "../hooks/useFields";
+import { useConditions } from "../hooks/useConditions";
+import { useValues } from "../hooks/useValues";
 
 export const Rule: FC<{
   rule: RuleType;
@@ -45,17 +15,9 @@ export const Rule: FC<{
     onRuleChange(rule);
   }, [rule, onRuleChange]);
 
-  const fields = FIELDS.filter((field) => !!field).map((field) => ({
-    label: field,
-    value: field,
-  })) as Option[];
-
-  const conditions = CONDITIONS.filter((condition) => !!condition).map(
-    (condition) => ({
-      label: condition,
-      value: condition,
-    })
-  ) as Option[];
+  const fields = useFields();
+  const conditions = useConditions();
+  const values = useValues(rule.field);
 
   return (
     <div className="flex items-end space-x-4">
@@ -84,10 +46,7 @@ export const Rule: FC<{
       <Select
         placeholder="Select criteria"
         label="Criteria"
-        dropdownOptions={(VALUES[rule.field || ""] || []).map((value) => ({
-          label: value.toString(),
-          value: value,
-        }))}
+        dropdownOptions={values}
         onChange={(value) => {
           onRuleChange({
             ...rule,
